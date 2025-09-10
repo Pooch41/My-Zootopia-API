@@ -10,7 +10,7 @@ def load_data(file_path):
 ANIMAL_DATA = load_data('animals_data.json')
 
 
-def generate_output():
+def serialise_animals():
     """Generates required string based off JSON file, returns string.
     If Data missing, inputs empty line"""
     output = ""
@@ -18,19 +18,26 @@ def generate_output():
         output += "\n<li class='cards__item'>\n"
         item_index = ANIMAL_DATA.index(item)
         try:
-            output += f"\t<div class='card__title'>{ANIMAL_DATA[item_index]['name']} </div>\n"
-            output += "\t\t<p class='card__text'>\n"
-            output += f"\t\t\t<strong>Diet: </strong>{ANIMAL_DATA[item_index]['characteristics']['diet']} <br/>\n"
-            output += "\t\t\t<strong>Location: </strong>"
+            output += (f"\t<div class='card__title'>"
+                       f"{ANIMAL_DATA[item_index]['name'].capitalize()} </div>\n")
+            output += "\t\t<div class='card__text'>\n<ul>\n"
+            output += (f"\t\t\t<li><strong>Diet: </strong>"
+                       f"{ANIMAL_DATA[item_index]['characteristics']['diet'].capitalize()} </li>\n")
+            output += (f"\t\t\t<li><strong>Lifespan: </strong>"
+                       f"{ANIMAL_DATA[item_index]['characteristics']['lifespan'].capitalize()} </li>\n")
+            output += "\t\t\t<li><strong>Location: </strong>"
             for location in ANIMAL_DATA[item_index]['locations']:
                 if location != ANIMAL_DATA[item_index]['locations'][-1]:
-                    output += location + ", "
+                    output += location.capitalize() + ", "
                 else:
-                    output += location + " <br/>\n"
-            output += f"\t\t\t<strong>Type: </strong>{ANIMAL_DATA[item_index]['characteristics']['type']} <br/>"
+                    output += location.capitalize() + " </li>\n"
+            output += (f"\t\t\t<li><strong>Habitat: </strong>"
+                       f"{ANIMAL_DATA[item_index]['characteristics']['habitat'].capitalize()} </li>\n")
+            output += (f"\t\t\t<li><strong>Type: </strong>"
+                       f"{ANIMAL_DATA[item_index]['characteristics']['type'].capitalize()} </li>")
         except (KeyError, NameError, TypeError):
-            output += "<br/>\n"
-    output += "</p> </li>\n"
+            output += "\t\t\t<br/>\n"
+        output += "\t\t\t</ul>\n\t\t</div>\n\t</li>\n"
     return output
 
 
@@ -43,4 +50,4 @@ def replace_text(filename, replacement_string):
         file.write(file_data)
 
 
-replace_text('animals_template.html', generate_output())
+replace_text('animals_template.html', serialise_animals())
