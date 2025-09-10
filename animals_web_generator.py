@@ -15,19 +15,21 @@ def generate_output():
     If Data missing, inputs empty line"""
     output = ""
     for item in ANIMAL_DATA:
+        output += '<li class="cards__item">'
         item_index = ANIMAL_DATA.index(item)
         try:
-            output += "Name: " + ANIMAL_DATA[item_index]['name'] + "\n"
-            output += "Diet: " + ANIMAL_DATA[item_index]['characteristics']['diet'] + "\n"
+            output += "Name: " + ANIMAL_DATA[item_index]['name'] + "\n" + "<br/>"
+            output += "Diet: " + ANIMAL_DATA[item_index]['characteristics']['diet'] + "\n" + "<br/>"
             output += "Location: "
             for location in ANIMAL_DATA[item_index]['locations']:
                 if location != ANIMAL_DATA[item_index]['locations'][-1]:
                     output += location + ", "
                 else:
-                    output += location + "\n"
-            output += ("Type: ", ANIMAL_DATA[item_index]['characteristics']['type'], "\n")
+                    output += location + "\n" + "<br/>"
+            output += "Type: " + ANIMAL_DATA[item_index]['characteristics']['type'] + "\n" + "<br/>"
         except (KeyError, NameError, TypeError):
-            output += "\n"
+            output += "\n" + "<br/>"
+    output += "</li>"
     return output
 
 
