@@ -15,21 +15,22 @@ def generate_output():
     If Data missing, inputs empty line"""
     output = ""
     for item in ANIMAL_DATA:
-        output += '<li class="cards__item">'
+        output += "<li class='cards__item'>"
         item_index = ANIMAL_DATA.index(item)
         try:
-            output += "Name: " + ANIMAL_DATA[item_index]['name'] + "\n" + "<br/>"
-            output += "Diet: " + ANIMAL_DATA[item_index]['characteristics']['diet'] + "\n" + "<br/>"
-            output += "Location: "
+            output += f"<div class='card__title'>{ANIMAL_DATA[item_index]['name']} </div>"
+            output += "<p class='card__text'>"
+            output += f"<strong>Diet: </strong>{ANIMAL_DATA[item_index]['characteristics']['diet']} <br/>"
+            output += "<strong> Location: </strong>"
             for location in ANIMAL_DATA[item_index]['locations']:
                 if location != ANIMAL_DATA[item_index]['locations'][-1]:
                     output += location + ", "
                 else:
-                    output += location + "\n" + "<br/>"
-            output += "Type: " + ANIMAL_DATA[item_index]['characteristics']['type'] + "\n" + "<br/>"
+                    output += location + "<br/>"
+            output += f"<strong>Type: </strong>{ANIMAL_DATA[item_index]['characteristics']['type']} <br/>"
         except (KeyError, NameError, TypeError):
-            output += "\n" + "<br/>"
-    output += "</li>"
+            output += "<br/>"
+    output += "</p> </li>"
     return output
 
 
