@@ -1,9 +1,11 @@
-import requests as r
 import os
+
+import requests as r
 from dotenv import load_dotenv
 
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
+
 
 def fetch_data(animal_name):
     """
@@ -22,8 +24,8 @@ def fetch_data(animal_name):
       }
     },
     """
-    raw_data = r.get('https://api.api-ninjas.com/v1/animals', params = {'name': animal_name},
-                     headers = {'X-Api-Key': API_KEY})
+    raw_data = r.get('https://api.api-ninjas.com/v1/animals', params={'name': animal_name},
+                     headers={'X-Api-Key': API_KEY})
 
     output = raw_data.json()
     return output

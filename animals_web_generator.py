@@ -1,5 +1,6 @@
 from data_fetcher import fetch_data
 
+
 def get_valid_animal():
     while True:
         user_input = input("Please enter animal: ")
@@ -11,7 +12,7 @@ def get_valid_animal():
 
 
 def serialise_animals(animal):
-    """Generates required string based off JSON file, returns string.
+    """Generates required string based off API request from data_fetcher, returns string.
     If Data missing, inputs empty line"""
     data = fetch_data(animal)
     if len(data) == 0:
@@ -54,6 +55,3 @@ def replace_text(filename, replacement_string):
 
 
 replace_text('animals_template.html', serialise_animals())
-
-
-
