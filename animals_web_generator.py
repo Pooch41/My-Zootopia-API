@@ -1,40 +1,43 @@
-import json
+from data_fetcher import fetch_data
+
+def get_valid_animal():
+    while True:
+        user_input = input("Please enter animal: ")
+        if len(user_input) == 0:
+            print("Error! Names cannot be blank.")
+        else:
+            break
+    return user_input
 
 
-def load_data(file_path):
-    """ Loads a JSON file """
-    with open(file_path, "r") as handle:
-        return json.load(handle)
-
-
-ANIMAL_DATA = load_data('animals_data.json')
-
-
-def serialise_animals():
+def serialise_animals(animal):
     """Generates required string based off JSON file, returns string.
     If Data missing, inputs empty line"""
+    data = fetch_data(animal)
+    if len(data) == 0:
+        return f"<li class='cards__item'><h2> No animal '{animal}' found! </h></li>"
     output = ""
-    for item in ANIMAL_DATA:
+    for item in data:
         output += "\n<li class='cards__item'>\n"
-        item_index = ANIMAL_DATA.index(item)
+        item_index = data.index(item)
         try:
             output += (f"\t<div class='card__title'>"
-                       f"{ANIMAL_DATA[item_index]['name'].capitalize()} </div>\n")
+                       f"{data[item_index]['name'].capitalize()} </div>\n")
             output += "\t\t<div class='card__text'>\n<ul>\n"
             output += (f"\t\t\t<li><strong>Diet: </strong>"
-                       f"{ANIMAL_DATA[item_index]['characteristics']['diet'].capitalize()} </li>\n")
+                       f"{data[item_index]['characteristics']['diet'].capitalize()} </li>\n")
             output += (f"\t\t\t<li><strong>Lifespan: </strong>"
-                       f"{ANIMAL_DATA[item_index]['characteristics']['lifespan'].capitalize()} </li>\n")
+                       f"{data[item_index]['characteristics']['lifespan'].capitalize()} </li>\n")
             output += "\t\t\t<li><strong>Location: </strong>"
-            for location in ANIMAL_DATA[item_index]['locations']:
-                if location != ANIMAL_DATA[item_index]['locations'][-1]:
+            for location in data[item_index]['locations']:
+                if location != data[item_index]['locations'][-1]:
                     output += location.capitalize() + ", "
                 else:
                     output += location.capitalize() + " </li>\n"
             output += (f"\t\t\t<li><strong>Habitat: </strong>"
-                       f"{ANIMAL_DATA[item_index]['characteristics']['habitat'].capitalize()} </li>\n")
+                       f"{data[item_index]['characteristics']['habitat'].capitalize()} </li>\n")
             output += (f"\t\t\t<li><strong>Type: </strong>"
-                       f"{ANIMAL_DATA[item_index]['characteristics']['type'].capitalize()} </li>")
+                       f"{data[item_index]['characteristics']['type'].capitalize()} </li>")
         except (KeyError, NameError, TypeError):
             output += "\t\t\t<br/>\n"
         output += "\t\t\t</ul>\n\t\t</div>\n\t</li>\n"
@@ -51,3 +54,5 @@ def replace_text(filename, replacement_string):
 
 
 replace_text('animals_template.html', serialise_animals())
+
+
