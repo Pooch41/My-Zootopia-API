@@ -3,7 +3,7 @@ from data_fetcher import fetch_data
 
 def get_valid_animal():
     while True:
-        user_input = input("Please enter animal: ")
+        user_input = input("Enter a name of an animal: ")
         if len(user_input) == 0:
             print("Error! Names cannot be blank.")
         else:
@@ -45,13 +45,13 @@ def serialise_animals(animal):
     return output
 
 
-def replace_text(filename, replacement_string):
+def replace_text(filename, replacement_string, output_filename):
     """replaces placeholder in file with desired string"""
     with open(filename, 'r') as file:
         file_data = file.read()
     file_data = file_data.replace("__REPLACE_ANIMALS_INFO__", replacement_string)
-    with open(filename, 'w') as file:
+    with open(output_filename, 'w', encoding ='utf-8') as file:
         file.write(file_data)
 
 
-replace_text('animals_template.html', serialise_animals())
+replace_text('animals_template.html', serialise_animals('fox'), 'animals.html')

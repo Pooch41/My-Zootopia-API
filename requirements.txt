@@ -1,7 +1,2 @@
-Required Libraries:
-    -requests
-    -dotenv
-    -os
-
-Get API Keys at:
-    >> https://api-ninjas.com/api/animals
+requests
+python-dotenv
